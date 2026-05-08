@@ -4,7 +4,24 @@
 
 import { getRequiredEnv } from '../runtimeConfig'
 
-export const API_BASE_URL = getRequiredEnv('VITE_API_BASE_URL')
+/**
+ * The raw origin of the API server, sourced from the environment variable.
+ * Must be an origin-only URL — no path, no trailing slash.
+ * Example: http://localhost:8080
+ */
+export const API_ORIGIN = getRequiredEnv('VITE_API_BASE_URL')
+
+/**
+ * Versioned API path prefix. Update here when the API version changes.
+ */
+export const API_VERSION_PREFIX = '/api/v1'
+
+/**
+ * Fully-qualified API base URL used by all service call sites.
+ * Composed of the origin and the versioned prefix.
+ * Example: http://localhost:8080/api/v1
+ */
+export const API_BASE_URL = `${API_ORIGIN}${API_VERSION_PREFIX}`
 
 // API Configuration
 export const API_CONFIG = {

@@ -3,7 +3,7 @@
  * when the API or auth changes, only this file is updated.
  */
 import type { ApiClient } from './api'
-import { API_BASE_URL } from '../constants'
+import { API_ORIGIN } from '../constants'
 
 interface UploadMetadataRequest {
   filename: string
@@ -57,7 +57,7 @@ export async function getDownloadUrl(apiClient: ApiClient, key: string): Promise
 
   // Normalize the URL if it's a relative path (common in local dev)
   const url = response.download_url.startsWith('/')
-    ? new URL(API_BASE_URL).origin + response.download_url
+    ? API_ORIGIN + response.download_url
     : response.download_url
 
   return { url, expiresAt: response.expires_at }

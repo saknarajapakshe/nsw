@@ -122,14 +122,9 @@ func Load() (*Config, error) {
 		},
 		Temporal: temporal.Config{
 			Host:      getEnvOrDefault("TEMPORAL_HOST", "localhost"),
-			PortRaw:   getEnvOrDefault("TEMPORAL_PORT", "7233"),
+			Port:      getIntOrDefault("TEMPORAL_PORT", 7233),
 			Namespace: getEnvOrDefault("TEMPORAL_NAMESPACE", "default"),
 		},
-	}
-
-	// Normalize parses PortRaw → Port before validation and client creation.
-	if err := cfg.Temporal.Normalize(); err != nil {
-		return nil, fmt.Errorf("invalid temporal configuration: %w", err)
 	}
 
 	// Validate required fields

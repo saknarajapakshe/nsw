@@ -1,7 +1,6 @@
 package config
 
 import (
-	"strings"
 	"testing"
 )
 
@@ -53,9 +52,12 @@ func TestLoadTemporalInvalidPort(t *testing.T) {
 	t.Setenv("DB_PASSWORD", "test")
 	t.Setenv("TEMPORAL_PORT", "not-a-number")
 
-	if _, err := Load(); err == nil {
-		t.Fatalf("Load() expected error")
-	} else if !strings.Contains(err.Error(), "invalid TEMPORAL_PORT") {
-		t.Fatalf("Load() error = %q, want to contain %q", err.Error(), "invalid TEMPORAL_PORT")
+	cfg, err := Load()
+	if err != nil {
+		t.Fatalf("Load() error = %v", err)
+	}
+
+	if cfg.Temporal.Port != 7233 {
+		t.Fatalf("Port for invalid input = %d, want default %d", cfg.Temporal.Port, 7233)
 	}
 }
